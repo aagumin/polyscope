@@ -29,7 +29,12 @@ type ScopeSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Scope. Edit scope_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	RoleSpec               RoleSpec               `json:"roleSpec"`
+	NamespaceSelectionSpec NamespaceSelectionSpec `json:"namespaceselectionspec"`
+	SubjectSpec            SubjectSpec            `json:"subjectspec"`
+
+	// +optional
+	TimeToLive metav1.Duration `json:"timeToLive,omitempty"`
 }
 
 // ScopeStatus defines the observed state of Scope.

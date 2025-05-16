@@ -37,6 +37,10 @@ type ScopeReconciler struct {
 // +kubebuilder:rbac:groups=polyscope.my.domain,resources=scopes/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=polyscope.my.domain,resources=scopes/finalizers,verbs=update
 
+// +kubebuilder:rbac:groups=rbac.authorization.k8s.io/v1,resources=Role,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=rbac.authorization.k8s.io/v1,resources=Role,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=rbac.authorization.k8s.io/v1,resources=Role,verbs=get;list;watch;create;update;patch;delete
+
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
 // TODO(user): Modify the Reconcile function to compare the state specified by
@@ -48,7 +52,11 @@ type ScopeReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.20.4/pkg/reconcile
 func (r *ScopeReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = logf.FromContext(ctx)
-
+	key := req.NamespacedName
+	app := &polyscopev1alpha1.Scope{}
+	if err := r.Get(ctx, key, app); err != nil {
+		return nil, err
+	}
 	// TODO(user): your logic here
 
 	return ctrl.Result{}, nil
